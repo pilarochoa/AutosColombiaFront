@@ -1,0 +1,14 @@
+@import "../assets/sass/variables";
+
+.site-layout-background {
+  background: #fff;
+}
+
+.title-form-row {
+  margin-bottom: 30px;
+  .ant-col:first-child {
+    font-size: 36px;
+    font-weight: 600;
+    color: $primary-color;
+  }
+}
