@@ -4,12 +4,11 @@ import { getToken } from "../utils/auth";
 
 const REACT_APP_API = process.env.REACT_APP_API || "http://localhost:9000";
 
-const token = getToken();
-
 export class RoleService {
 
-  static getAllUsers = async ()=> {
+  static getAllRoles = async (setIsLogin: Function)=> {
     try {
+      const token = getToken(setIsLogin);
       let url = `${REACT_APP_API}/api/role`;
       
       const { data } = await axios.get(url, {

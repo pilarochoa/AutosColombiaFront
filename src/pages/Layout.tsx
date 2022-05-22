@@ -1,63 +1,92 @@
-import { useState } from 'react';
-import { Layout as LayoutAnt, Menu, MenuProps } from 'antd';
+import { useContext, useState, useEffect } from 'react';
+import { Avatar, Dropdown, Layout as LayoutAnt, Menu, MenuProps, Spin } from 'antd';
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
-  LaptopOutlined,
+  HomeOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import '../sass/layout.scss';
+import { IconComponent } from '../components/Common/IconComponent';
 
 import logoReact from "../assets/logoReact.svg";
+import AppContext from '../context/AppContext';
+import { IMenu } from '../interfaces/menu';
+import { MenuService } from '../services/menu';
+import { getCurrentUser } from '../utils/common';
 
-const { Header, Content, Footer, Sider } = LayoutAnt;
+const { Header, Content, Sider } = LayoutAnt;
 
 export const Layout = () => {
+  const { defaultMenu, setIsLogin } = useContext(AppContext);
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+  const [items2, setItems2] = useState<MenuProps['items'] | []>([]);
+  const [loading, setLoading] = useState(false);
 
   const onCollapse = (collapsed: boolean) => {
     console.log(collapsed);
     setCollapsed(collapsed);
   };
 
-  // const items1: MenuProps['items'] = ['1', '2', '3'].map(key => ({
-  //   key,
-  //   label: `nav ${key}`,
-  // }));
+  const getAllMenus = async () => {
+    try {
+      const menus: IMenu[] | undefined = await MenuService.getAllMenus(setIsLogin);
+      if (menus && menus.length > 0) {
+        const dataMenuFilter: any[] = [];
+        const currentUser = getCurrentUser();
+        (menus || []).forEach((item: IMenu) => {
+          if (item.roles.some(rol => rol.name.toUpperCase() === currentUser.rol)) {
+            dataMenuFilter.push(item);
+          }
+        });
+        const dataItems: any[] = (dataMenuFilter || []).map(
+          (item: IMenu, index: number) => {
+            return {
+              key: item.key,
+              icon: <IconComponent icon={item.icon} />,
+              label: item.name,
+              onClick: () => navigate(`/${item.key}`)
+            };
+          },
+        );
+        dataItems.unshift({
+          key: 'home',
+          icon: <HomeOutlined />,
+          label: 'Inicio',
+          onClick: () => navigate("/", { replace: true })
+        });
+        setItems2(dataItems);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.log('Error getAllMenus = ', error);
+      setLoading(false);
+    }
+  };
 
-  /* const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-    (icon, index) => {
-      const key = String(index + 1);
+  useEffect(() => {
+    setLoading(true);
+    getAllMenus();
+  }, []);
 
-      return {
-        key: `sub${key}`,
-        icon: React.createElement(icon),
-        label: `subnav ${key}`,
+  const handleLogout = () => {
+    localStorage.clear();
+    setIsLogin(false);
+  };
 
-        children: new Array(4).fill(null).map((_, j) => {
-          const subKey = index * 4 + j + 1;
-          return {
-            key: subKey,
-            label: `option${subKey}`,
-          };
-        }),
-      };
-    },
-  ); */
-
-  const items2: MenuProps['items'] = [{
-    key: 'user',
-    icon: <UserOutlined />,
-    label: 'Usuarios',
-    onClick: () => navigate("/users")
-  }, {
-    key: 'menu',
-    icon: <MenuUnfoldOutlined />,
-    label: 'Menus',
-    onClick: () => navigate("/menus")
-  }]
+  const MenuDrop = () => (
+    <Menu
+      onClick={handleLogout}
+      items={[
+        {
+          label: 'Cerrar sesión',
+          key: '1',
+        }
+      ]}
+    />
+  );
 
   return (
     <LayoutAnt>
@@ -65,7 +94,21 @@ export const Layout = () => {
         <div className="logo">
           <img src={logoReact} className="App-logo" alt="logo" />
         </div>
-        <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} items={[]} />
+        {/* <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} items={[]} /> */}
+        <Dropdown
+          overlay={() => <MenuDrop />}
+          placement="bottomRight"
+          className="content-user-dropdown"
+        >
+          <a
+            href="javascrip:void()"
+            className="custom-header-user"
+            onClick={e => e.preventDefault()}
+          >
+            <Avatar icon={<UserOutlined />} />
+            <span style={{ paddingLeft: 8 }}>{JSON.parse(localStorage.getItem('currentUser') || '')?.name || ""}</span>
+          </a>
+        </Dropdown>
       </Header>
       <LayoutAnt>
         <Sider
@@ -75,13 +118,16 @@ export const Layout = () => {
           collapsed={collapsed}
           onCollapse={onCollapse}
         >
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{ height: '100%', borderRight: 0 }}
-            items={items2}
-          />
+          <Spin spinning={loading} className={loading ? 'custom-spinning' : ''}>
+            <Menu
+              mode="inline"
+              defaultSelectedKeys={['home']}
+              selectedKeys={[`${defaultMenu}`]}
+              defaultOpenKeys={['sub1']}
+              style={{ height: '100%', borderRight: 0 }}
+              items={items2}
+            />
+          </Spin>
         </Sider>
         <LayoutAnt
           className="content-layout-section"

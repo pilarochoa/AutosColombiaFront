@@ -7,6 +7,12 @@ export const verifyToken = (exp: number) => {
   return isValidToken(exp);
 };
 
-export const getToken = () => {
-  return localStorage.getItem('token_acces');
+export const getToken = (setIsLogin: Function) => {
+  if (localStorage.getItem('token_access')) {
+    return localStorage.getItem('token_access');
+  } else {
+    localStorage.clear();
+    setIsLogin(false);
+    return;
+  }
 };

@@ -1,18 +1,22 @@
-import { Form, Input, Button, Row, Col, Select, Spin } from "antd";
+import { Form, Input, Button, Row, Col, Select, Spin, Alert } from "antd";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { IRole, IUserFormPropsComponent } from "../../interfaces/user";
+import { IListKeyMenu, IMenuFormPropsComponent } from "../../interfaces/menu";
+import { IRole } from "../../interfaces/user";
 import "../../sass/form.scss";
 
 const { Option } = Select;
 
-export const UserForm = ({
+export const MenuForm = ({
   dataRole,
   handleSubmit,
-  dataUser,
+  dataMenu,
   edit,
-  loading
-}: IUserFormPropsComponent) => {
+  loading,
+  showError,
+  setShowError,
+  selectsData
+}: IMenuFormPropsComponent) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
@@ -20,7 +24,7 @@ export const UserForm = ({
     console.log('Success:', values);
     const text = edit ? 'editado' : 'creado';
     const message = `El usuario ha sido ${text} con éxito.`;
-    handleSubmit({ ...values }, message);
+    handleSubmit({ ...values, key: values.keyMenu }, message);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -28,18 +32,19 @@ export const UserForm = ({
   };
 
   useEffect(() => {
-    if (edit && dataUser) {
+    if (edit && dataMenu) {
       form.setFieldsValue({
-        ...dataUser
+        ...dataMenu,
+        keyMenu: dataMenu.key
       });
     }
-  }, [edit, dataUser]);
+  }, [edit, dataMenu]);
 
   return (
     <>
       <Row className="title-form-row">
         <Col span={14} offset={2}>
-          {edit ? 'Editar usuario' : 'Crear usuario'}
+          {edit ? 'Editar menú' : 'Crear menú'}
         </Col>
       </Row>
       <Spin spinning={loading}>
@@ -61,58 +66,37 @@ export const UserForm = ({
             <Input />
           </Form.Item>
           <Form.Item
-            label="Tipo Documento"
-            name="typeDocument"
-            rules={[{ required: true, message: 'Por favor ingrese su tipo de documento!' }]}
+            label="Icono"
+            name="icon"
+            rules={[{ required: true, message: 'Por favor ingrese el icono!' }]}
           >
             <Select allowClear>
-              <Option value="CC">Cédula</Option>
-              <Option value="TI">Tarjeta Identidad</Option>
-              <Option value="PAS">Pasaporte</Option>
-              <Option value="TE">Tarjeta Extranjeria</Option>
+              {(selectsData?.listIcons || []).map((item: IListKeyMenu) => 
+                <Option value={item.key}>{item.value}</Option>)
+              }
             </Select>
           </Form.Item>
           <Form.Item
-            label="Documento"
-            name="document"
-            rules={[{ required: true, message: 'Por favor ingrese su documento!' }]}
+            label="Llave menú"
+            name="keyMenu"
+            rules={[{ required: true, message: 'Por favor ingrese la llave del menú!' }]}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Teléfono"
-            name="phone"
-            rules={[{ required: true, message: 'Por favor ingrese su teléfono!' }]}
-          >
-            <Input
-              minLength={7}
-              maxLength={10}
-            />
-          </Form.Item>
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: 'Por favor ingrese su email!' }]}
-          >
-            <Input />
+            <Select allowClear disabled={edit}>
+              {(selectsData?.listKeyMenu || []).map((item: IListKeyMenu) => 
+                <Option value={item.key}>{item.value}</Option>)
+              }
+            </Select>
           </Form.Item>
 
-          {!edit && (
-            <Form.Item
-              label="Password"
-              name="password"
-              rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-              <Input.Password />
-            </Form.Item>
-          )}
-
           <Form.Item
-            label="Rol"
-            name="rol"
+            label="Roles"
+            name="roles"
             rules={[{ required: true, message: 'Por favor ingrese su Rol!' }]}
           >
-            <Select allowClear>
+            <Select
+              mode="multiple"
+              allowClear
+            >
               {dataRole.map((role: IRole, index: number) =>
                 <Option
                   key={`option-key-${index}`}
@@ -129,13 +113,29 @@ export const UserForm = ({
               <Button type="primary" htmlType="submit">
                 {edit ? 'Actualizar' : 'Guardar'}
               </Button>
-              <Button type="ghost" onClick={() => navigate("/users", { replace: true })}>
+              <Button type="ghost" onClick={() => navigate("/menu", { replace: true })}>
                 Cancelar
               </Button>
             </Row>
           </Form.Item>
         </Form>
       </Spin>
+      {showError.show && (
+        <Alert
+          message={showError.message}
+          type="warning"
+          showIcon
+          closable
+          onClose={() => {
+            if (setShowError) {
+              setShowError({
+                show: false,
+                message: ""
+              });
+            }
+          }}
+        />
+      )}
     </>
   );
 };

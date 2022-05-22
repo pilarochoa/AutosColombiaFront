@@ -1,15 +1,15 @@
 import axios from "axios"
-import { IUser } from "../interfaces/user";
+import { IMenu } from "../interfaces/menu";
 import { getToken } from "../utils/auth";
 
 const REACT_APP_API = process.env.REACT_APP_API || "http://localhost:9000";
 
-export class UserService {
+export class MenuService {
 
-  static getAllUsers = async (setIsLogin: Function) => {
+  static getAllMenus = async (setIsLogin: Function) => {
     try {
       const token = getToken(setIsLogin);
-      let url = `${REACT_APP_API}/api/users`;
+      let url = `${REACT_APP_API}/api/menu`;
       
       const { data } = await axios.get(url, {
         headers: {
@@ -18,8 +18,8 @@ export class UserService {
         }  
       })
       console.log("data == ", data);
-      const result: IUser[] = [];
-      (data || []).forEach((item: IUser) => {
+      const result: IMenu[] = [];
+      (data || []).forEach((item: IMenu) => {
         delete item.__v;
         result.push(item);
       });
@@ -29,10 +29,10 @@ export class UserService {
     }
   }
 
-  static getUserById = async (id: string, setIsLogin: Function) => {
+  static getMenuById = async (id: string, setIsLogin: Function) => {
     try {
       const token = getToken(setIsLogin);
-      let url = `${REACT_APP_API}/api/users/${id}`;
+      let url = `${REACT_APP_API}/api/menu/${id}`;
       
       const { data } = await axios.get(url, {
         headers: {
@@ -41,55 +41,67 @@ export class UserService {
         }  
       })
       console.log("data == ", data);
-      const result: IUser = data;
+      const result: IMenu = data;
       return result;
     } catch (error) {
       console.log("error == ", error)
     }
   }
 
-  static saveUser = async (dataUser: IUser, setIsLogin: Function) => {
+  static saveMenu = async (dataMenu: IMenu, setShowError: Function, setIsLogin: Function) => {
     try {
       const token = getToken(setIsLogin);
-      let url = `${REACT_APP_API}/api/users`;
+      let url = `${REACT_APP_API}/api/menu`;
       
-      const { data } = await axios.post(url, dataUser, {
+      const { data } = await axios.post(url, dataMenu, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json;odata=verbose"
         }  
       })
       console.log("data save user == ", data);
-      const result: IUser = data;
+      const result: IMenu = data;
       return result;
-    } catch (error) {
+    } catch (error: any) {
       console.log("error == ", error);
+      if (error?.response?.data) {
+        setShowError({
+          show: true,
+          message: error?.response?.data.message
+        });
+      }
     }
   }
 
-  static updateUser = async (id: string, dataUser: IUser, setIsLogin: Function) => {
+  static updateMenu = async (id: string, dataMenu: IMenu, setShowError: Function, setIsLogin: Function) => {
     try {
       const token = getToken(setIsLogin);
-      let url = `${REACT_APP_API}/api/users/${id}`;
+      let url = `${REACT_APP_API}/api/menu/${id}`;
       
-      const { data } = await axios.put(url, dataUser, {
+      const { data } = await axios.put(url, dataMenu, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json;odata=verbose"
         }  
       })
       console.log("data update user == ", data);
-      const result: IUser = data;
+      const result: IMenu = data;
       return result;
-    } catch (error) {
+    } catch (error: any) {
       console.log("error == ", error);
+      if (error?.response?.data) {
+        setShowError({
+          show: true,
+          message: error?.response?.data.message
+        });
+      }
     }
   }
 
-  static deleteUser = async (id: string, setIsLogin: Function) => {
+  static deleteMenu = async (id: string, setIsLogin: Function) => {
     try {
       const token = getToken(setIsLogin);
-      let url = `${REACT_APP_API}/api/users/${id}`;
+      let url = `${REACT_APP_API}/api/menu/${id}`;
       
       const { data } = await axios.delete(url, {
         headers: {
@@ -98,7 +110,7 @@ export class UserService {
         }  
       })
       console.log("data == ", data);
-      const result: IUser = data;
+      const result: IMenu = data;
       return result;
     } catch (error) {
       console.log("error == ", error)

@@ -1,56 +1,31 @@
 import { Table } from "../Common/Table";
 import { useNavigate } from "react-router-dom";
 import {
-  UserOutlined,
+  MenuUnfoldOutlined,
   EditOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import { IUserPropsComponent } from "../../interfaces/user";
+import { IMenuPropsComponent } from "../../interfaces/menu";
 
-export const Users = ({
+export const Menus = ({
   dataSource,
   loading,
   handleDelete
-}: IUserPropsComponent) => {
+}: IMenuPropsComponent) => {
   const navigate = useNavigate();
   
   const columns = [
     {
       title: 'Nombre',
       dataIndex: 'name',
-      key: 'name',
-      render: (text: any) => <a>{text}</a>,
+      key: 'name'
     },
     {
-      title: 'Tipo Documento',
-      dataIndex: 'typeDocument',
-      key: 'typeDocument',
-    },
-    {
-      title: 'Documento',
-      dataIndex: 'document',
-      key: 'document',
-    },
-    {
-      title: 'Correo',
-      key: 'email',
-      dataIndex: 'email'
+      title: 'Llave menú',
+      dataIndex: 'keyMenu',
+      key: 'keyMenu'
     }
   ];
-
-  // const dataSource = [{
-  //   id: "1",
-  //   name: "Edison",
-  //   typeDocument: "CC",
-  //   document: 12345,
-  //   email: "correo@correo.com"
-  // }, {
-  //   id: "2",
-  //   name: "Pepe",
-  //   typeDocument: "CC",
-  //   document: 12345,
-  //   email: "pepe@correo.com"
-  // }]
 
   const onDelete = (id: string) => {
     console.log('id == ', id)
@@ -59,13 +34,13 @@ export const Users = ({
 
   return (
     <Table
-      title="Users"
+      title="Menús"
       columns={columns}
       dataSource={dataSource}
       addButtons={[
         {
-          text: 'Agregar Usuario',
-          icon: <UserOutlined />,
+          text: 'Agregar Menu',
+          icon: <MenuUnfoldOutlined />,
           onClick: () => navigate("form"),
         },
       ]}
@@ -74,10 +49,7 @@ export const Users = ({
           text: 'Editar',
           icon: <EditOutlined />,
           type: 'primary',
-          onClick: (record: any) => {
-            debugger;
-            navigate(`form/${record._id}`);
-          }
+          onClick: (record: any) => navigate(`form/${record._id}`),
         },
         {
           text: 'Eliminar',
