@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
   HomeOutlined,
-  MenuUnfoldOutlined,
+  PlusSquareOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import '../sass/layout.scss';
@@ -33,6 +33,7 @@ export const Layout = () => {
   const getAllMenus = async () => {
     try {
       const menus: IMenu[] | undefined = await MenuService.getAllMenus(setIsLogin);
+      let dataItems: any[] = [];
       if (menus && menus.length > 0) {
         const dataMenuFilter: any[] = [];
         const currentUser = getCurrentUser();
@@ -41,7 +42,7 @@ export const Layout = () => {
             dataMenuFilter.push(item);
           }
         });
-        const dataItems: any[] = (dataMenuFilter || []).map(
+        dataItems = (dataMenuFilter || []).map(
           (item: IMenu, index: number) => {
             return {
               key: item.key,
@@ -51,14 +52,30 @@ export const Layout = () => {
             };
           },
         );
-        dataItems.unshift({
-          key: 'home',
-          icon: <HomeOutlined />,
-          label: 'Inicio',
-          onClick: () => navigate("/", { replace: true })
-        });
-        setItems2(dataItems);
       }
+      dataItems.unshift({
+        key: 'register',
+        label: 'Registros',
+        icon: <PlusSquareOutlined />,
+        onClick: () => navigate("/register", { replace: true })
+        // label: 'Registro',
+        // children: [{
+        //   key: 'register-form',
+        //   label: 'Ingresar registro',
+        //   onClick: () => navigate("/register/form", { replace: true })
+        // }, {
+        //   key: 'register',
+        //   label: 'Consultar registro',
+        //   onClick: () => navigate("/register", { replace: true })
+        // }]
+      });
+      dataItems.unshift({
+        key: 'home',
+        icon: <HomeOutlined />,
+        label: 'Inicio',
+        onClick: () => navigate("/", { replace: true })
+      });
+      setItems2(dataItems);
       setLoading(false);
     } catch (error) {
       console.log('Error getAllMenus = ', error);
@@ -94,7 +111,6 @@ export const Layout = () => {
         <div className="logo">
           <img src={logoReact} className="App-logo" alt="logo" />
         </div>
-        {/* <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} items={[]} /> */}
         <Dropdown
           overlay={() => <MenuDrop />}
           placement="bottomRight"

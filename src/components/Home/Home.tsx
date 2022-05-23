@@ -6,7 +6,7 @@ export const Home = () => {
     <>
       <Row className="title-form-row title-home">
         <Col span={18} offset={2}>
-          Parking IU
+          Autos Colombia
         </Col>
       </Row>
     </>

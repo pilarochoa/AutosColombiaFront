@@ -24,7 +24,9 @@ export const MenuForm = ({
     console.log('Success:', values);
     const text = edit ? 'editado' : 'creado';
     const message = `El menú ha sido ${text} con éxito.`;
-    handleSubmit({ ...values, key: values.keyMenu }, message);
+    const keyMenu = values.keyMenu;
+    delete values.keyMenu;
+    handleSubmit({ ...values, key: keyMenu }, message);
   };
 
   const onFinishFailed = (errorInfo: any) => {

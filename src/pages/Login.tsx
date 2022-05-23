@@ -42,7 +42,7 @@ export const Login = ({ setIsLogin }: ILogin) => {
     <div className="content-login">
       <div className="section-login">
         <Row className="title-form-row">
-          <Col span={14} offset={2}>Parking Login</Col>
+          <Col span={14} offset={2}>Autos Colombia Login</Col>
         </Row>
         <Form
           name="basic"

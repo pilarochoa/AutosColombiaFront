@@ -28,7 +28,7 @@ export const Menu = () => {
 
   const listIcons: IListKeyMenu[] = [{
     key: 'user',
-    value: <>Inicio <IconComponent icon="home" /></>
+    value: <>Usuarios <IconComponent icon="user" /></>
   }, {
     key: 'menu',
     value: <>Menu <IconComponent icon="menu" /></>

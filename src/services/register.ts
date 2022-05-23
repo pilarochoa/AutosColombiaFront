@@ -1,15 +1,15 @@
 import axios from "axios"
-import { ICell } from "../interfaces/cell";
+import { IRegister } from "../interfaces/register";
 import { getToken } from "../utils/auth";
 
 const REACT_APP_API = process.env.REACT_APP_API || "http://localhost:9000";
 
-export class CellService {
+export class RegisterService {
 
-  static getAllCells = async (setIsLogin: Function, urlParam?: string) => {
+  static getAllRegisters = async (setIsLogin: Function) => {
     try {
       const token = getToken(setIsLogin);
-      let url = `${REACT_APP_API}${urlParam ? urlParam : '/api/cell'}`;
+      let url = `${REACT_APP_API}/api/register`;
       
       const { data } = await axios.get(url, {
         headers: {
@@ -18,8 +18,8 @@ export class CellService {
         }  
       })
       console.log("data == ", data);
-      const result: ICell[] = [];
-      (data || []).forEach((item: ICell) => {
+      const result: IRegister[] = [];
+      (data || []).forEach((item: IRegister) => {
         delete item.__v;
         result.push(item);
       });
@@ -29,10 +29,10 @@ export class CellService {
     }
   }
 
-  static getCellById = async (id: string, setIsLogin: Function) => {
+  static getRegisterById = async (id: string, setIsLogin: Function) => {
     try {
       const token = getToken(setIsLogin);
-      let url = `${REACT_APP_API}/api/cell/${id}`;
+      let url = `${REACT_APP_API}/api/register/${id}`;
       
       const { data } = await axios.get(url, {
         headers: {
@@ -41,67 +41,55 @@ export class CellService {
         }  
       })
       console.log("data == ", data);
-      const result: ICell = data;
+      const result: IRegister = data;
       return result;
     } catch (error) {
       console.log("error == ", error)
     }
   }
 
-  static saveCell = async (dataCell: ICell, setShowError: Function, setIsLogin: Function) => {
+  static saveRegister = async (datayyy: IRegister, setIsLogin: Function) => {
     try {
       const token = getToken(setIsLogin);
-      let url = `${REACT_APP_API}/api/cell`;
+      let url = `${REACT_APP_API}/api/register`;
       
-      const { data } = await axios.post(url, dataCell, {
+      const { data } = await axios.post(url, datayyy, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json;odata=verbose"
         }  
       })
       console.log("data save user == ", data);
-      const result: ICell = data;
+      const result: IRegister = data;
       return result;
-    } catch (error: any) {
+    } catch (error) {
       console.log("error == ", error);
-      if (error?.response?.data) {
-        setShowError({
-          show: true,
-          message: error?.response?.data.message
-        });
-      }
     }
   }
 
-  static updateCell = async (id: string, dataCell: ICell, setShowError: Function, setIsLogin: Function) => {
+  static updateRegister = async (id: string, datayyy: IRegister, setIsLogin: Function) => {
     try {
       const token = getToken(setIsLogin);
-      let url = `${REACT_APP_API}/api/cell/${id}`;
+      let url = `${REACT_APP_API}/api/register/${id}`;
       
-      const { data } = await axios.put(url, dataCell, {
+      const { data } = await axios.put(url, datayyy, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json;odata=verbose"
         }  
       })
       console.log("data update user == ", data);
-      const result: ICell = data;
+      const result: IRegister = data;
       return result;
-    } catch (error: any) {
+    } catch (error) {
       console.log("error == ", error);
-      if (error?.response?.data) {
-        setShowError({
-          show: true,
-          message: error?.response?.data.message
-        });
-      }
     }
   }
 
-  static deleteCell = async (id: string, setIsLogin: Function) => {
+  static deleteRegister = async (id: string, setIsLogin: Function) => {
     try {
       const token = getToken(setIsLogin);
-      let url = `${REACT_APP_API}/api/cell/${id}`;
+      let url = `${REACT_APP_API}/api/register/${id}`;
       
       const { data } = await axios.delete(url, {
         headers: {
@@ -110,7 +98,7 @@ export class CellService {
         }  
       })
       console.log("data == ", data);
-      const result: ICell = data;
+      const result: IRegister = data;
       return result;
     } catch (error) {
       console.log("error == ", error)

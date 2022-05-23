@@ -15,3 +15,5 @@ export * from './Customer/Customers';
 export * from './Customer/Customer';
 export * from './TypeVehicle/TypeVehicles';
 export * from './TypeVehicle/TypeVehicle';
+export * from './Register/Register';
+export * from './Register/Registers';

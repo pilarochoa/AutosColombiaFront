@@ -22,7 +22,9 @@ import {
   Customers,
   Customer,
   TypeVehicles,
-  TypeVehicle
+  TypeVehicle,
+  Register,
+  Registers
 } from "../pages";
 import AppContext from "../context/AppContext";
 import { verifyToken } from "../utils/auth";
@@ -96,6 +98,11 @@ export const Routes = () => {
                   <Route index element={<CellStatuses />} />
                   <Route path="form" element={<CellStatus />} />
                   <Route path="form/:id" element={<CellStatus />} />
+                </Route>
+                <Route path="register">
+                  <Route index element={<Registers />} />
+                  <Route path="form" element={<Register />} />
+                  <Route path="form/:id" element={<Register />} />
                 </Route>
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Route>
