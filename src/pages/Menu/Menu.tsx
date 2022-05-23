@@ -26,12 +26,12 @@ export const Menu = () => {
 
   const navigate = useNavigate();
 
-  const listKeyMenu: IListKeyMenu[] = [{
+  const listIcons: IListKeyMenu[] = [{
     key: 'user',
     value: <>Inicio <IconComponent icon="home" /></>
   }, {
     key: 'menu',
-    value: <>Inicio <IconComponent icon="menu" /></>
+    value: <>Menu <IconComponent icon="menu" /></>
   }, {
     key: 'zone',
     value: <>Zona <IconComponent icon="zone" /></>
@@ -49,7 +49,7 @@ export const Menu = () => {
     value: <>Estado celda <IconComponent icon="stateCell" /></>
   }];
 
-  const listIcons: IListKeyMenu[] = [{
+  const listKeyMenu: IListKeyMenu[] = [{
     key: 'users',
     value: 'users - Usuario'
   }, {
