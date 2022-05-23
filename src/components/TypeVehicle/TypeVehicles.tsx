@@ -1,17 +1,17 @@
 import { Table } from "../Common/Table";
 import { useNavigate } from "react-router-dom";
 import {
-  MenuUnfoldOutlined,
+  PicLeftOutlined,
   EditOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import { IMenu, IMenuPropsComponent } from "../../interfaces/menu";
+import { ITypeVehiclePropsComponent } from "../../interfaces/typeVehicle";
 
-export const Menus = ({
+export const TypeVehicles = ({
   dataSource,
   loading,
   handleDelete
-}: IMenuPropsComponent) => {
+}: ITypeVehiclePropsComponent) => {
   const navigate = useNavigate();
   
   const columns = [
@@ -21,32 +21,30 @@ export const Menus = ({
       key: 'name'
     },
     {
-      title: 'Llave menú',
-      dataIndex: 'keyMenu',
-      key: 'keyMenu'
+      title: 'Valor mes',
+      dataIndex: 'tafifaMes',
+      key: 'tafifaMes'
     },
     {
-      title: 'Roles',
-      dataIndex: 'roles',
-      key: 'roles',
-      render: (text: any, record: IMenu) => record.roles.map(role => role.name)
+      title: 'Valor día',
+      dataIndex: 'tafifaDia',
+      key: 'tafifaDia'
     }
   ];
 
   const onDelete = (id: string) => {
-    console.log('id == ', id)
     handleDelete(id);
   };
 
   return (
     <Table
-      title="Menús"
+      title="Tipo vehículo"
       columns={columns}
       dataSource={dataSource}
       addButtons={[
         {
-          text: 'Agregar Menu',
-          icon: <MenuUnfoldOutlined />,
+          text: 'Agregar Tipo vehículo',
+          icon: <PicLeftOutlined />,
           onClick: () => navigate("form"),
         },
       ]}
@@ -62,7 +60,7 @@ export const Menus = ({
           icon: <DeleteOutlined />,
           type: 'danger',
           okText: "Aceptar",
-          confirm: '¿Está seguro que desea eliminar esta opcion de menú?',
+          confirm: '¿Está seguro que desea eliminar este tipo vehículo?',
           onClick: (record: any) => onDelete(record._id),
         },
       ]}

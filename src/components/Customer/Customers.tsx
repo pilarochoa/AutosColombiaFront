@@ -1,35 +1,40 @@
 import { Table } from "../Common/Table";
 import { useNavigate } from "react-router-dom";
 import {
-  MenuUnfoldOutlined,
+  UsergroupDeleteOutlined,
   EditOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import { IMenu, IMenuPropsComponent } from "../../interfaces/menu";
+import { ICustomerPropsComponent } from "../../interfaces/customer";
 
-export const Menus = ({
+export const Customers = ({
   dataSource,
   loading,
   handleDelete
-}: IMenuPropsComponent) => {
+}: ICustomerPropsComponent) => {
   const navigate = useNavigate();
   
   const columns = [
     {
       title: 'Nombre',
       dataIndex: 'name',
-      key: 'name'
+      key: 'name',
+      render: (text: any) => <a>{text}</a>,
     },
     {
-      title: 'Llave menú',
-      dataIndex: 'keyMenu',
-      key: 'keyMenu'
+      title: 'Tipo Documento',
+      dataIndex: 'typeDocument',
+      key: 'typeDocument',
     },
     {
-      title: 'Roles',
-      dataIndex: 'roles',
-      key: 'roles',
-      render: (text: any, record: IMenu) => record.roles.map(role => role.name)
+      title: 'Documento',
+      dataIndex: 'document',
+      key: 'document',
+    },
+    {
+      title: 'Correo',
+      key: 'email',
+      dataIndex: 'email'
     }
   ];
 
@@ -40,13 +45,13 @@ export const Menus = ({
 
   return (
     <Table
-      title="Menús"
+      title="Clientes"
       columns={columns}
       dataSource={dataSource}
       addButtons={[
         {
-          text: 'Agregar Menu',
-          icon: <MenuUnfoldOutlined />,
+          text: 'Agregar Cliente',
+          icon: <UsergroupDeleteOutlined />,
           onClick: () => navigate("form"),
         },
       ]}
@@ -55,14 +60,17 @@ export const Menus = ({
           text: 'Editar',
           icon: <EditOutlined />,
           type: 'primary',
-          onClick: (record: any) => navigate(`form/${record._id}`),
+          onClick: (record: any) => {
+            debugger;
+            navigate(`form/${record._id}`);
+          }
         },
         {
           text: 'Eliminar',
           icon: <DeleteOutlined />,
           type: 'danger',
           okText: "Aceptar",
-          confirm: '¿Está seguro que desea eliminar esta opcion de menú?',
+          confirm: '¿Está seguro que desea eliminar este cliente?',
           onClick: (record: any) => onDelete(record._id),
         },
       ]}

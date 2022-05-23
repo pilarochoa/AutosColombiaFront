@@ -54,7 +54,7 @@ export const Login = ({ setIsLogin }: ILogin) => {
           autoComplete="off"
         >
           <Form.Item
-            label="Username"
+            label="Email"
             name="email"
             rules={[{ required: true, message: 'Por favor ingrese su email!' }]}
           >

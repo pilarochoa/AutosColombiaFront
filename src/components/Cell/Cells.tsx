@@ -1,35 +1,48 @@
 import { Table } from "../Common/Table";
 import { useNavigate } from "react-router-dom";
 import {
-  MenuUnfoldOutlined,
+  BorderOuterOutlined,
   EditOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import { IMenu, IMenuPropsComponent } from "../../interfaces/menu";
+import { ICell, ICellPropsComponent } from "../../interfaces/cell";
+import { Tag } from "antd";
 
-export const Menus = ({
+export const Cells = ({
   dataSource,
   loading,
   handleDelete
-}: IMenuPropsComponent) => {
+}: ICellPropsComponent) => {
   const navigate = useNavigate();
   
   const columns = [
     {
       title: 'Nombre',
       dataIndex: 'name',
-      key: 'name'
+      key: 'name',
+      render: (text: any) => <a>{text}</a>,
     },
     {
-      title: 'Llave menú',
-      dataIndex: 'keyMenu',
-      key: 'keyMenu'
+      title: 'Zona',
+      dataIndex: 'zone',
+      key: 'zone',
+      render: (text: any, record: ICell) => record?.zone.name
     },
     {
-      title: 'Roles',
-      dataIndex: 'roles',
-      key: 'roles',
-      render: (text: any, record: IMenu) => record.roles.map(role => role.name)
+      title: 'Estado celda',
+      dataIndex: 'cellStatus',
+      key: 'cellStatus',
+      render: (text: any, record: ICell) => {
+        const texto = record.cellStatus.available === "S" ? "Si" : "No";
+        const color = record.cellStatus.color;
+        return (
+          <span>
+            <Tag color={color}>
+              {texto}
+            </Tag>
+          </span>
+        );
+      }
     }
   ];
 
@@ -40,13 +53,13 @@ export const Menus = ({
 
   return (
     <Table
-      title="Menús"
+      title="Celdas"
       columns={columns}
       dataSource={dataSource}
       addButtons={[
         {
-          text: 'Agregar Menu',
-          icon: <MenuUnfoldOutlined />,
+          text: 'Agregar Celda',
+          icon: <BorderOuterOutlined />,
           onClick: () => navigate("form"),
         },
       ]}
@@ -62,7 +75,7 @@ export const Menus = ({
           icon: <DeleteOutlined />,
           type: 'danger',
           okText: "Aceptar",
-          confirm: '¿Está seguro que desea eliminar esta opcion de menú?',
+          confirm: '¿Está seguro que desea eliminar esta celda?',
           onClick: (record: any) => onDelete(record._id),
         },
       ]}

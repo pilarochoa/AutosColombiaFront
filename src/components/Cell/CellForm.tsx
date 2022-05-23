@@ -1,30 +1,30 @@
 import { Form, Input, Button, Row, Col, Select, Spin, Alert } from "antd";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { IListKeyMenu, IMenuFormPropsComponent } from "../../interfaces/menu";
-import { IRole } from "../../interfaces/user";
+import { ICellFormPropsComponent } from "../../interfaces/cell";
+import { ICellStatus } from "../../interfaces/cellStatus";
+import { IZone } from "../../interfaces/zone";
 import "../../sass/form.scss";
 
 const { Option } = Select;
 
-export const MenuForm = ({
-  dataRole,
+export const CellForm = ({
+  dataSelects,
   handleSubmit,
-  dataMenu,
+  dataCell,
   edit,
   loading,
   showError,
-  setShowError,
-  selectsData
-}: IMenuFormPropsComponent) => {
+  setShowError
+}: ICellFormPropsComponent) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
   const onFinish = (values: any) => {
     console.log('Success:', values);
-    const text = edit ? 'editado' : 'creado';
-    const message = `El menú ha sido ${text} con éxito.`;
-    handleSubmit({ ...values, key: values.keyMenu }, message);
+    const text = edit ? 'editada' : 'creada';
+    const message = `La celda ha sido ${text} con éxito.`;
+    handleSubmit({ ...values }, message);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -32,19 +32,18 @@ export const MenuForm = ({
   };
 
   useEffect(() => {
-    if (edit && dataMenu) {
+    if (edit && dataCell) {
       form.setFieldsValue({
-        ...dataMenu,
-        keyMenu: dataMenu.key
+        ...dataCell
       });
     }
-  }, [edit, dataMenu]);
+  }, [edit, dataCell]);
 
   return (
     <>
       <Row className="title-form-row">
         <Col span={14} offset={2}>
-          {edit ? 'Editar menú' : 'Crear menú'}
+          {edit ? 'Editar celda' : 'Crear celda'}
         </Col>
       </Row>
       <Spin spinning={loading}>
@@ -65,44 +64,36 @@ export const MenuForm = ({
           >
             <Input />
           </Form.Item>
+          
           <Form.Item
-            label="Icono"
-            name="icon"
-            rules={[{ required: true, message: 'Por favor ingrese el icono!' }]}
+            label="Zona"
+            name="zone"
+            rules={[{ required: true, message: 'Por favor ingrese la zona!' }]}
           >
             <Select allowClear>
-              {(selectsData?.listIcons || []).map((item: IListKeyMenu) => 
-                <Option value={item.key}>{item.value}</Option>)
-              }
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Llave menú"
-            name="keyMenu"
-            rules={[{ required: true, message: 'Por favor ingrese la llave del menú!' }]}
-          >
-            <Select allowClear disabled={edit}>
-              {(selectsData?.listKeyMenu || []).map((item: IListKeyMenu) => 
-                <Option value={item.key}>{item.value}</Option>)
-              }
+              {dataSelects.dataZone.map((zone: IZone, index: number) =>
+                <Option
+                  key={`option-key-${index}`}
+                  value={zone._id}
+                >
+                  {zone.name}
+                </Option>
+              )}
             </Select>
           </Form.Item>
 
           <Form.Item
-            label="Roles"
-            name="roles"
-            rules={[{ required: true, message: 'Por favor ingrese su Rol!' }]}
+            label="Estado celda"
+            name="cellStatus"
+            rules={[{ required: true, message: 'Por favor ingrese el estado de la zona!' }]}
           >
-            <Select
-              mode="multiple"
-              allowClear
-            >
-              {dataRole.map((role: IRole, index: number) =>
+            <Select allowClear>
+              {dataSelects.dataCellStatus.map((cellStatus: ICellStatus, index: number) =>
                 <Option
                   key={`option-key-${index}`}
-                  value={role._id}
+                  value={cellStatus._id}
                 >
-                  {role.name}
+                  {cellStatus.name}
                 </Option>
               )}
             </Select>
@@ -113,7 +104,7 @@ export const MenuForm = ({
               <Button type="primary" htmlType="submit">
                 {edit ? 'Actualizar' : 'Guardar'}
               </Button>
-              <Button type="ghost" onClick={() => navigate("/menu", { replace: true })}>
+              <Button type="ghost" onClick={() => navigate("/cell", { replace: true })}>
                 Cancelar
               </Button>
             </Row>

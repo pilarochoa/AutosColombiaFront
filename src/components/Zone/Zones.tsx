@@ -1,17 +1,17 @@
 import { Table } from "../Common/Table";
 import { useNavigate } from "react-router-dom";
 import {
-  MenuUnfoldOutlined,
+  BorderHorizontalOutlined,
   EditOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import { IMenu, IMenuPropsComponent } from "../../interfaces/menu";
+import { IZonePropsComponent } from "../../interfaces/zone";
 
-export const Menus = ({
+export const Zones = ({
   dataSource,
   loading,
   handleDelete
-}: IMenuPropsComponent) => {
+}: IZonePropsComponent) => {
   const navigate = useNavigate();
   
   const columns = [
@@ -19,34 +19,22 @@ export const Menus = ({
       title: 'Nombre',
       dataIndex: 'name',
       key: 'name'
-    },
-    {
-      title: 'Llave menú',
-      dataIndex: 'keyMenu',
-      key: 'keyMenu'
-    },
-    {
-      title: 'Roles',
-      dataIndex: 'roles',
-      key: 'roles',
-      render: (text: any, record: IMenu) => record.roles.map(role => role.name)
     }
   ];
 
   const onDelete = (id: string) => {
-    console.log('id == ', id)
     handleDelete(id);
   };
 
   return (
     <Table
-      title="Menús"
+      title="Zonas"
       columns={columns}
       dataSource={dataSource}
       addButtons={[
         {
-          text: 'Agregar Menu',
-          icon: <MenuUnfoldOutlined />,
+          text: 'Agregar Zona',
+          icon: <BorderHorizontalOutlined />,
           onClick: () => navigate("form"),
         },
       ]}
@@ -62,7 +50,7 @@ export const Menus = ({
           icon: <DeleteOutlined />,
           type: 'danger',
           okText: "Aceptar",
-          confirm: '¿Está seguro que desea eliminar esta opcion de menú?',
+          confirm: '¿Está seguro que desea eliminar esta zona?',
           onClick: (record: any) => onDelete(record._id),
         },
       ]}

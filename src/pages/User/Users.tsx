@@ -49,7 +49,7 @@ export const Users = () => {
       }
     } catch (error) {
       setLoading(false);
-      console.log("Error saveUpdateUser = ",  error);
+      console.log("Error deleteUser = ",  error);
     }
   };
 

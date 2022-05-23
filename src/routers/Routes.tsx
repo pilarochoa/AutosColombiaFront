@@ -12,16 +12,20 @@ import {
   User,
   Login,
   Menus,
-  Menu
+  Menu,
+  Zones,
+  Zone,
+  CellStatuses,
+  CellStatus,
+  Cells,
+  Cell,
+  Customers,
+  Customer,
+  TypeVehicles,
+  TypeVehicle
 } from "../pages";
 import AppContext from "../context/AppContext";
 import { verifyToken } from "../utils/auth";
-
-const Prueba = ({ title }: any) => {
-  return (
-    <div>Prueba {title}</div>
-  );
-}
 
 export const Routes = () => {
   const [defaultMenu, setDefaultMenu] = useState('home');
@@ -68,7 +72,31 @@ export const Routes = () => {
                   <Route path="form" element={<Menu />} />
                   <Route path="form/:id" element={<Menu />} />
                 </Route>
-                <Route path="menu" element={<Prueba title="Menus" />} />
+                <Route path="zone">
+                  <Route index element={<Zones />} />
+                  <Route path="form" element={<Zone />} />
+                  <Route path="form/:id" element={<Zone />} />
+                </Route>
+                <Route path="cell">
+                  <Route index element={<Cells />} />
+                  <Route path="form" element={<Cell />} />
+                  <Route path="form/:id" element={<Cell />} />
+                </Route>
+                <Route path="customer">
+                  <Route index element={<Customers />} />
+                  <Route path="form" element={<Customer />} />
+                  <Route path="form/:id" element={<Customer />} />
+                </Route>
+                <Route path="vehicleType">
+                  <Route index element={<TypeVehicles />} />
+                  <Route path="form" element={<TypeVehicle />} />
+                  <Route path="form/:id" element={<TypeVehicle />} />
+                </Route>
+                <Route path="stateCell">
+                  <Route index element={<CellStatuses />} />
+                  <Route path="form" element={<CellStatus />} />
+                  <Route path="form/:id" element={<CellStatus />} />
+                </Route>
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Route>
             </RoutesRender>

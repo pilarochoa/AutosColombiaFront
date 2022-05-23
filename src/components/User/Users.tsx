@@ -38,20 +38,6 @@ export const Users = ({
     }
   ];
 
-  // const dataSource = [{
-  //   id: "1",
-  //   name: "Edison",
-  //   typeDocument: "CC",
-  //   document: 12345,
-  //   email: "correo@correo.com"
-  // }, {
-  //   id: "2",
-  //   name: "Pepe",
-  //   typeDocument: "CC",
-  //   document: 12345,
-  //   email: "pepe@correo.com"
-  // }]
-
   const onDelete = (id: string) => {
     console.log('id == ', id)
     handleDelete(id);
@@ -59,7 +45,7 @@ export const Users = ({
 
   return (
     <Table
-      title="Users"
+      title="Usuarios"
       columns={columns}
       dataSource={dataSource}
       addButtons={[
@@ -84,7 +70,7 @@ export const Users = ({
           icon: <DeleteOutlined />,
           type: 'danger',
           okText: "Aceptar",
-          confirm: 'Esta seguro que desea eliminar este usuario?',
+          confirm: '¿Está seguro que desea eliminar este usuario?',
           onClick: (record: any) => onDelete(record._id),
         },
       ]}

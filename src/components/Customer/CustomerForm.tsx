@@ -1,25 +1,24 @@
 import { Form, Input, Button, Row, Col, Select, Spin } from "antd";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { IRole, IUserFormPropsComponent } from "../../interfaces/user";
+import { ICustomerFormPropsComponent } from "../../interfaces/customer";
 import "../../sass/form.scss";
 
 const { Option } = Select;
 
-export const UserForm = ({
-  dataRole,
+export const CustomerForm = ({
   handleSubmit,
-  dataUser,
+  dataCustomer,
   edit,
   loading
-}: IUserFormPropsComponent) => {
+}: ICustomerFormPropsComponent) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
   const onFinish = (values: any) => {
     console.log('Success:', values);
     const text = edit ? 'editado' : 'creado';
-    const message = `El usuario ha sido ${text} con éxito.`;
+    const message = `El cliente ha sido ${text} con éxito.`;
     handleSubmit({ ...values }, message);
   };
 
@@ -28,18 +27,18 @@ export const UserForm = ({
   };
 
   useEffect(() => {
-    if (edit && dataUser) {
+    if (edit && dataCustomer) {
       form.setFieldsValue({
-        ...dataUser
+        ...dataCustomer
       });
     }
-  }, [edit, dataUser]);
+  }, [edit, dataCustomer]);
 
   return (
     <>
       <Row className="title-form-row">
         <Col span={14} offset={2}>
-          {edit ? 'Editar usuario' : 'Crear usuario'}
+          {edit ? 'Editar cliente' : 'Crear cliente'}
         </Col>
       </Row>
       <Spin spinning={loading}>
@@ -97,39 +96,12 @@ export const UserForm = ({
             <Input />
           </Form.Item>
 
-          {!edit && (
-            <Form.Item
-              label="Password"
-              name="password"
-              rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-              <Input.Password />
-            </Form.Item>
-          )}
-
-          <Form.Item
-            label="Rol"
-            name="rol"
-            rules={[{ required: true, message: 'Por favor ingrese su Rol!' }]}
-          >
-            <Select allowClear>
-              {dataRole.map((role: IRole, index: number) =>
-                <Option
-                  key={`option-key-${index}`}
-                  value={role._id}
-                >
-                  {role.name}
-                </Option>
-              )}
-            </Select>
-          </Form.Item>
-
           <Form.Item wrapperCol={{ offset: 5, span: 10 }}>
             <Row className="row-buttons-form">
               <Button type="primary" htmlType="submit">
                 {edit ? 'Actualizar' : 'Guardar'}
               </Button>
-              <Button type="ghost" onClick={() => navigate("/users", { replace: true })}>
+              <Button type="ghost" onClick={() => navigate("/customer", { replace: true })}>
                 Cancelar
               </Button>
             </Row>

@@ -121,6 +121,10 @@ export const Menu = () => {
 
   const saveUpdateMenu = async (data: IMenu, text: string) => {
     setLoading(true);
+    setShowError({
+      show: false,
+      message: ""
+    });
     try {
       const user: IMenu | undefined = await
         (id ? MenuService.updateMenu(id, data, setShowError, setIsLogin) :

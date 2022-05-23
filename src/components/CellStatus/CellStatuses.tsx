@@ -1,17 +1,18 @@
 import { Table } from "../Common/Table";
 import { useNavigate } from "react-router-dom";
 import {
-  MenuUnfoldOutlined,
+  AppstoreOutlined,
   EditOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import { IMenu, IMenuPropsComponent } from "../../interfaces/menu";
+import { ICellStatus, ICellStatusPropsComponent } from "../../interfaces/cellStatus";
+import { Tag } from "antd";
 
-export const Menus = ({
+export const CellStatuses = ({
   dataSource,
   loading,
   handleDelete
-}: IMenuPropsComponent) => {
+}: ICellStatusPropsComponent) => {
   const navigate = useNavigate();
   
   const columns = [
@@ -21,32 +22,36 @@ export const Menus = ({
       key: 'name'
     },
     {
-      title: 'Llave menú',
-      dataIndex: 'keyMenu',
-      key: 'keyMenu'
-    },
-    {
-      title: 'Roles',
-      dataIndex: 'roles',
-      key: 'roles',
-      render: (text: any, record: IMenu) => record.roles.map(role => role.name)
+      title: 'Disponible',
+      dataIndex: 'available',
+      key: 'available',
+      render: (text: any, record: ICellStatus) => {
+        const texto = record.available === "S" ? "Si" : "No";
+        const color = record.color;
+        return (
+          <span>
+            <Tag color={color}>
+              {texto}
+            </Tag>
+          </span>
+        );
+      },
     }
   ];
 
   const onDelete = (id: string) => {
-    console.log('id == ', id)
     handleDelete(id);
   };
 
   return (
     <Table
-      title="Menús"
+      title="Estados de celda"
       columns={columns}
       dataSource={dataSource}
       addButtons={[
         {
-          text: 'Agregar Menu',
-          icon: <MenuUnfoldOutlined />,
+          text: 'Agregar Estado Celda',
+          icon: <AppstoreOutlined />,
           onClick: () => navigate("form"),
         },
       ]}
@@ -62,7 +67,7 @@ export const Menus = ({
           icon: <DeleteOutlined />,
           type: 'danger',
           okText: "Aceptar",
-          confirm: '¿Está seguro que desea eliminar esta opcion de menú?',
+          confirm: '¿Está seguro que desea eliminar este estado?',
           onClick: (record: any) => onDelete(record._id),
         },
       ]}
