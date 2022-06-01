@@ -26,15 +26,15 @@ export const Cells = ({
       title: 'Zona',
       dataIndex: 'zone',
       key: 'zone',
-      render: (text: any, record: ICell) => record?.zone.name
+      render: (text: any, record: ICell) => record?.zone?.name
     },
     {
       title: 'Estado celda',
       dataIndex: 'cellStatus',
       key: 'cellStatus',
       render: (text: any, record: ICell) => {
-        const texto = record.cellStatus.available === "S" ? "Si" : "No";
-        const color = record.cellStatus.color;
+        const texto = record.cellStatus?.available === "S" ? "Si" : "No";
+        const color = record.cellStatus?.color;
         return (
           <span>
             <Tag color={color}>
