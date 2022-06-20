@@ -26,7 +26,6 @@ export const Layout = () => {
   const [loading, setLoading] = useState(false);
 
   const onCollapse = (collapsed: boolean) => {
-    console.log(collapsed);
     setCollapsed(collapsed);
   };
 

@@ -17,7 +17,6 @@ export const TypeVehicle = () => {
   const getTypeVehicleById = async (id: string) => {
     try {
       const typeVehicle: ITypeVehicle | undefined = await TypeVehicleService.getTypeVehicleById(id, setIsLogin);
-      console.log('typeVehicle == ', typeVehicle);
       if (typeVehicle) {
         setDataTypeVehicle(typeVehicle);
       }

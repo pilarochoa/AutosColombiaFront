@@ -19,7 +19,6 @@ export const CellStatusForm = ({
   const onFinish = (values: any) => {
     const text = edit ? 'editado' : 'creado';
     const message = `La zona ha sido ${text} con éxito.`;
-    debugger;
     handleSubmit({ ...values }, message);
   };
 

@@ -17,7 +17,6 @@ export class TypeVehicleService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: ITypeVehicle[] = [];
       (data || []).forEach((item: ITypeVehicle) => {
         delete item.__v;
@@ -40,7 +39,6 @@ export class TypeVehicleService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: ITypeVehicle = data;
       return result;
     } catch (error) {
@@ -59,7 +57,6 @@ export class TypeVehicleService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data save typeVehicle == ", data);
       const result: ITypeVehicle = data;
       return result;
     } catch (error) {
@@ -78,7 +75,6 @@ export class TypeVehicleService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data update typeVehicle == ", data);
       const result: ITypeVehicle = data;
       return result;
     } catch (error) {
@@ -97,7 +93,6 @@ export class TypeVehicleService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: ITypeVehicle = data;
       return result;
     } catch (error) {

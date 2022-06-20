@@ -17,7 +17,6 @@ export class CellService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: ICell[] = [];
       (data || []).forEach((item: ICell) => {
         delete item.__v;
@@ -40,7 +39,6 @@ export class CellService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: ICell = data;
       return result;
     } catch (error) {
@@ -59,7 +57,6 @@ export class CellService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data save user == ", data);
       const result: ICell = data;
       return result;
     } catch (error: any) {
@@ -84,7 +81,6 @@ export class CellService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data update user == ", data);
       const result: ICell = data;
       return result;
     } catch (error: any) {
@@ -109,7 +105,6 @@ export class CellService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: ICell = data;
       return result;
     } catch (error) {

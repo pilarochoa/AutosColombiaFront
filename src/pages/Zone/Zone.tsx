@@ -17,7 +17,6 @@ export const Zone = () => {
   const getZoneById = async (id: string) => {
     try {
       const user: IZone | undefined = await ZoneService.getZoneById(id, setIsLogin);
-      console.log('user == ', user);
       if (user) {
         setDataZone(user);
       }

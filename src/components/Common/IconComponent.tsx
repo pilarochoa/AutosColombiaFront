@@ -6,7 +6,8 @@ import {
   UsergroupDeleteOutlined,
   PicLeftOutlined,
   AppstoreOutlined,
-  MenuUnfoldOutlined
+  MenuUnfoldOutlined,
+  DollarOutlined
 } from '@ant-design/icons';
 
 interface IPropIconComponent {
@@ -39,6 +40,9 @@ export const IconComponent = ({ icon }: IPropIconComponent) => {
         break;
     case 'stateCell':
       iconResponse = <AppstoreOutlined />;
+        break;
+    case 'payment':
+      iconResponse = <DollarOutlined />;
         break;
     default:
       break;

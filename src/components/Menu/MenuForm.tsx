@@ -21,7 +21,6 @@ export const MenuForm = ({
   const navigate = useNavigate();
 
   const onFinish = (values: any) => {
-    console.log('Success:', values);
     const text = edit ? 'editado' : 'creado';
     const message = `El menú ha sido ${text} con éxito.`;
     const keyMenu = values.keyMenu;

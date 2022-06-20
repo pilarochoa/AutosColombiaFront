@@ -13,7 +13,6 @@ export const Customers = () => {
   const getAllCustomers = async () => {
     try {
       const customers: ICustomer[] | undefined = await CustomerService.getAllCustomers(setIsLogin);
-      console.log('customers == ', customers);
       if (customers && customers.length > 0) {
         const resultData: ICustomer[] = customers.map((item: ICustomer) => {
           return { ...item, key: item._id }

@@ -13,7 +13,6 @@ export const CellStatuses = () => {
   const getAllCellStatuses = async () => {
     try {
       const cellStatuses: ICellStatus[] | undefined = await CellStatusService.getAllCellStatuses(setIsLogin);
-      console.log('cellStatuses == ', cellStatuses);
       if (cellStatuses && cellStatuses.length > 0) {
         const resultData: ICellStatus[] = cellStatuses.map((item: ICellStatus) => {
           return { ...item, key: item._id }

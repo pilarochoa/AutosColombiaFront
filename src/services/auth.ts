@@ -15,7 +15,6 @@ export class AuthService {
         Accept: "application/json;odata=verbose"
       }  
     })
-    console.log("data signIn == ", data);
     const result: IAuth = data;
     return result;
   }

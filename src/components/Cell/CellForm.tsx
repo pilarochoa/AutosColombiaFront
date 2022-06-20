@@ -21,7 +21,6 @@ export const CellForm = ({
   const navigate = useNavigate();
 
   const onFinish = (values: any) => {
-    console.log('Success:', values);
     const text = edit ? 'editada' : 'creada';
     const message = `La celda ha sido ${text} con éxito.`;
     handleSubmit({ ...values }, message);

@@ -13,7 +13,6 @@ export const Zones = () => {
   const getAllZones = async () => {
     try {
       const zones: IZone[] | undefined = await ZoneService.getAllZones(setIsLogin);
-      console.log('zones == ', zones);
       if (zones && zones.length > 0) {
         const resultData: IZone[] = zones.map((item: IZone) => {
           return { ...item, key: item._id }

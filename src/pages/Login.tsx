@@ -14,12 +14,10 @@ export const Login = ({ setIsLogin }: ILogin) => {
   const [showError, setShowError] = useState(false);
   const { id } = useParams();
 
-  console.log('id param = ', id);
   const onFinish = async (values: any) => {
     setShowError(false);
     try {
       const dataUserLogeed: IAuth = await AuthService.signIn(values.email, values.password);
-      console.log('dataUserLogeed == ', dataUserLogeed);
       localStorage.setItem('token_access', dataUserLogeed.accessToken);
       localStorage.setItem('token_exp', dataUserLogeed.exp.toString());
       localStorage.setItem('currentUser', JSON.stringify({

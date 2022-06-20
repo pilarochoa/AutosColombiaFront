@@ -13,7 +13,6 @@ export const Menus = () => {
   const getAllMenus = async () => {
     try {
       const menus: IMenu[] | undefined = await MenuService.getAllMenus(setIsLogin);
-      console.log('menus == ', menus);
       if (menus && menus.length > 0) {
         const resultData: IMenu[] = menus.map((item: IMenu) => {
           return { ...item, key: item._id, keyMenu: item.key }

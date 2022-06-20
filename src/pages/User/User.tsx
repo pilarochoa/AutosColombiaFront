@@ -19,7 +19,6 @@ export const User = () => {
   const getAllRoles = async () => {
     try {
       const roles: IRole[] | undefined = await RoleService.getAllRoles(setIsLogin);
-      console.log('roles == ', roles);
       if (roles && roles.length > 0) {
         setDataRole(roles);
       }
@@ -33,7 +32,6 @@ export const User = () => {
   const getUserById = async (id: string) => {
     try {
       const user: IUser | undefined = await UserService.getUserById(id, setIsLogin);
-      console.log('user == ', user);
       if (user) {
         setDataUser(user);
       }

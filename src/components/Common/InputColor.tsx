@@ -27,9 +27,6 @@ export const InputColor = ({ color, form }: IInputControl) => {
     }
   }, [color]);
   
-
-  console.log(internalColor);
-
   const overlay = (
     <div>
       <SketchPicker

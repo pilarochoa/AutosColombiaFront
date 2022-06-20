@@ -25,7 +25,6 @@ export const RegisterForm = ({
   const navigate = useNavigate();
 
   const onFinish = (values: any) => {
-    console.log('Success:', values);
     const text = edit ? 'editada' : 'creada';
     const message = `La celda ha sido ${text} con éxito.`;
     const currentUser = getCurrentUser();
@@ -50,6 +49,8 @@ export const RegisterForm = ({
   //   // Can not select days before today and today
   //   return current && current < moment().endOf('day');
   // };
+
+  const spanButton = edit ? 15 : 10;
 
   return (
     <>
@@ -144,11 +145,16 @@ export const RegisterForm = ({
             <DatePicker picker="date" />
           </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 5, span: 10 }}>
+          <Form.Item wrapperCol={{ offset: 5, span: spanButton }}>
             <Row className="row-buttons-form">
               <Button type="primary" htmlType="submit">
                 {edit ? 'Actualizar' : 'Guardar'}
               </Button>
+              {edit && (
+                <Button danger onClick={() => navigate(`/payment/${dataRegister?._id}`, { replace: true })}>
+                  Pagar
+                </Button>
+              )}
               <Button type="ghost" onClick={() => navigate("/register", { replace: true })}>
                 Cancelar
               </Button>

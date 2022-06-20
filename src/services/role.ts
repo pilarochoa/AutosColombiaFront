@@ -17,7 +17,6 @@ export class RoleService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: IRole[] = [];
       (data || []).forEach((item: IRole) => {
         delete item.__v;

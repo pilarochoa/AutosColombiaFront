@@ -2,6 +2,8 @@ export interface ITypeVehicle {
   _id?: string;
   key?: string;
   name: string;
+  tafifaMes: number;
+  tafifaDia: number;
   __v?: number;
 }
 

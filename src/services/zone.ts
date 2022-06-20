@@ -17,7 +17,6 @@ export class ZoneService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: IZone[] = [];
       (data || []).forEach((item: IZone) => {
         delete item.__v;
@@ -40,7 +39,6 @@ export class ZoneService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: IZone = data;
       return result;
     } catch (error) {
@@ -59,7 +57,6 @@ export class ZoneService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data save user == ", data);
       const result: IZone = data;
       return result;
     } catch (error) {
@@ -78,7 +75,6 @@ export class ZoneService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data update user == ", data);
       const result: IZone = data;
       return result;
     } catch (error) {
@@ -97,7 +93,6 @@ export class ZoneService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: IZone = data;
       return result;
     } catch (error) {

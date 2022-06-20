@@ -47,6 +47,9 @@ export const Menu = () => {
   }, {
     key: 'stateCell',
     value: <>Estado celda <IconComponent icon="stateCell" /></>
+  }, {
+    key: 'payment',
+    value: <>Pagos <IconComponent icon="payment" /></>
   }];
 
   const listKeyMenu: IListKeyMenu[] = [{
@@ -70,12 +73,14 @@ export const Menu = () => {
   }, {
     key: 'stateCell',
     value: 'stateCell - Estado celda'
+  }, {
+    key: 'payment',
+    value: 'payment - Pagos'
   }];
 
   const getAllRoles = async () => {
     try {
       const roles: IRole[] | undefined = await RoleService.getAllRoles(setIsLogin);
-      console.log('roles == ', roles);
       if (roles && roles.length > 0) {
         setDataRole(roles);
       }
@@ -89,7 +94,6 @@ export const Menu = () => {
   const getMenuById = async (id: string) => {
     try {
       const user: IMenu | undefined = await MenuService.getMenuById(id, setIsLogin);
-      console.log('user == ', user);
       if (user) {
         setDataMenu(user);
       }

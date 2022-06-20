@@ -13,7 +13,6 @@ export const Cells = () => {
   const getAllCells = async () => {
     try {
       const cells: ICell[] | undefined = await CellService.getAllCells(setIsLogin);
-      console.log('cells == ', cells);
       if (cells && cells.length > 0) {
         const resultData: ICell[] = cells.map((item: ICell) => {
           return { ...item, key: item._id }

@@ -39,7 +39,6 @@ export const Customers = ({
   ];
 
   const onDelete = (id: string) => {
-    console.log('id == ', id)
     handleDelete(id);
   };
 
@@ -61,7 +60,6 @@ export const Customers = ({
           icon: <EditOutlined />,
           type: 'primary',
           onClick: (record: any) => {
-            debugger;
             navigate(`form/${record._id}`);
           }
         },

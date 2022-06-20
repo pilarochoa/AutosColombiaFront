@@ -10,9 +10,11 @@ import { CellService } from "../../services/cell";
 import { CustomerService } from "../../services/customer";
 import { RegisterService } from "../../services/register";
 import { TypeVehicleService } from "../../services/typeVehicle";
-import { RegisterForm } from "../../components/Register/RegisterForm";
+import { PaymentForm } from "../../components/Payment/PaymentForm";
+import { IPayment } from "../../interfaces/payment";
+import { PaymentService } from "../../services/payment";
 
-export const Register = () => {
+export const Payment = () => {
   const { id } = useParams();
   const { setIsLogin, setDefaultMenu } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
@@ -31,14 +33,30 @@ export const Register = () => {
 
   const getRegisterById = async (id: string) => {
     try {
-      const user: IRegister | undefined = await RegisterService.getRegisterById(id, setIsLogin);
-      if (user) {
-        setDataRegister(user);
+      const register: IRegister | undefined = await RegisterService.getRegisterById(id, setIsLogin);
+      if (register) {
+        setDataRegister(register);
       }
       setLoading(false);
     } catch (error) {
       setLoading(false);
       console.log("Error getAllRoles = ",  error);
+    }
+  }
+
+  const getPriceRegisterByPlaca = async (placa: string) => {
+    setLoading(true);
+    try {
+      const tarifa: number | undefined = await RegisterService.getPriceRegisterByPlaca(placa, setIsLogin);
+      if (tarifa) {
+        setLoading(false);
+        return tarifa;
+      }
+      setLoading(false);
+      return undefined;
+    } catch (error) {
+      setLoading(false);
+      console.log("Error getPriceRegisterByPlaca = ",  error);
     }
   }
 
@@ -62,7 +80,7 @@ export const Register = () => {
 
   useEffect(() => {
     if (setDefaultMenu) {
-      setDefaultMenu('users');
+      setDefaultMenu('payment');
     };
     setLoading(true);
     getAllLists();
@@ -71,32 +89,38 @@ export const Register = () => {
   useEffect(() => {
     if (id) {
       getRegisterById(id);
+    } else {
+      setDataRegister(undefined);
     }
   }, [id]);
   
 
-  const saveUpdateRegister = async (data: IRegister, text: string) => {
+  const saveUpdatePayment = async (data: IPayment, text: string, form: any) => {
     setLoading(true);
     try {
-      const user: IRegister | undefined = await
-        (id ? RegisterService.updateRegister(id, data, setIsLogin) : RegisterService.saveRegister(data, setIsLogin));
+      /* const payment: IPayment | undefined = await
+        (id ? PaymentService.updatePayment(id, data, setIsLogin) : PaymentService.savePayment(data, setIsLogin)); */
+      const payment: IPayment | undefined = await PaymentService.savePayment(data, setIsLogin);
       setLoading(false);
-      if (user) {
+      if (payment) {
+        form.setFieldsValue({
+          placa: '',
+          price: ''
+        });
         message.success(text, 2);
-        navigate("/register/form", { replace: true });
+        navigate("/payment", { replace: true });
       }
     } catch (error) {
       setLoading(false);
-      console.log("Error saveUpdateRegister = ",  error);
+      console.log("Error saveUpdatePayment = ",  error);
     }
   };
 
   return (
-    <RegisterForm
-      dataSelects={dataSelects}
-      handleSubmit={saveUpdateRegister}
+    <PaymentForm
+      handleSubmit={saveUpdatePayment}
       dataRegister={dataRegister}
-      edit={id ? true : false}
+      getPriceRegisterByPlaca={getPriceRegisterByPlaca}
       loading={loading}
       showError={showError} 
       setShowError={setShowError}

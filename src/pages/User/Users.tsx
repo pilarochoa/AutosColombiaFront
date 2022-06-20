@@ -15,7 +15,6 @@ export const Users = () => {
   const getAllUsers = async () => {
     try {
       const users: IUser[] | undefined = await UserService.getAllUsers(setIsLogin);
-      console.log('users == ', users);
       if (users && users.length > 0) {
         const resultData: IUser[] = users.map((item: IUser) => {
           return { ...item, key: item._id }

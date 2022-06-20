@@ -12,7 +12,6 @@ export const TypeVehicles = () => {
   const getAllTypeVehicles = async () => {
     try {
       const typeVehicles: ITypeVehicle[] | undefined = await TypeVehicleService.getAllTypeVehicles(setIsLogin);
-      console.log('typeVehicles == ', typeVehicles);
       if (typeVehicles && typeVehicles.length > 0) {
         const resultData: ITypeVehicle[] = typeVehicles.map((item: ITypeVehicle) => {
           return { ...item, key: item._id }

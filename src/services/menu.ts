@@ -17,7 +17,6 @@ export class MenuService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: IMenu[] = [];
       (data || []).forEach((item: IMenu) => {
         delete item.__v;
@@ -40,7 +39,6 @@ export class MenuService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: IMenu = data;
       return result;
     } catch (error) {
@@ -59,7 +57,6 @@ export class MenuService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data save user == ", data);
       const result: IMenu = data;
       return result;
     } catch (error: any) {
@@ -84,7 +81,6 @@ export class MenuService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data update user == ", data);
       const result: IMenu = data;
       return result;
     } catch (error: any) {
@@ -109,7 +105,6 @@ export class MenuService {
           Accept: "application/json;odata=verbose"
         }  
       })
-      console.log("data == ", data);
       const result: IMenu = data;
       return result;
     } catch (error) {

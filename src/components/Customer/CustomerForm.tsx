@@ -16,7 +16,6 @@ export const CustomerForm = ({
   const navigate = useNavigate();
 
   const onFinish = (values: any) => {
-    console.log('Success:', values);
     const text = edit ? 'editado' : 'creado';
     const message = `El cliente ha sido ${text} con éxito.`;
     handleSubmit({ ...values }, message);

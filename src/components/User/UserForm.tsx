@@ -17,7 +17,6 @@ export const UserForm = ({
   const navigate = useNavigate();
 
   const onFinish = (values: any) => {
-    console.log('Success:', values);
     const text = edit ? 'editado' : 'creado';
     const message = `El usuario ha sido ${text} con éxito.`;
     handleSubmit({ ...values }, message);

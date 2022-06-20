@@ -28,6 +28,7 @@ import {
 } from "../pages";
 import AppContext from "../context/AppContext";
 import { verifyToken } from "../utils/auth";
+import { Payment } from "../pages/Payment/Payment";
 
 export const Routes = () => {
   const [defaultMenu, setDefaultMenu] = useState('home');
@@ -104,6 +105,9 @@ export const Routes = () => {
                   <Route path="form" element={<Register />} />
                   <Route path="form/:id" element={<Register />} />
                 </Route>
+                <Route path="payment" element={<Payment />} />
+                <Route path="payment/:id" element={<Payment />} />
+
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Route>
             </RoutesRender>

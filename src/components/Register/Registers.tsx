@@ -57,7 +57,6 @@ export const Registers = ({
   ];
 
   const onDelete = (id: string) => {
-    console.log('id == ', id)
     handleDelete(id);
   };
 
@@ -79,7 +78,6 @@ export const Registers = ({
           icon: <EditOutlined />,
           type: 'primary',
           onClick: (record: any) => {
-            debugger;
             navigate(`form/${record._id}`);
           }
         },

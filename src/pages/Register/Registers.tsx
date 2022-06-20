@@ -13,7 +13,6 @@ export const Registers = () => {
   const getAllRegisters = async () => {
     try {
       const registers: IRegister[] | undefined = await RegisterService.getAllRegisters(setIsLogin);
-      console.log('registers == ', registers);
       if (registers && registers.length > 0) {
         const resultData: IRegister[] = registers.map((item: IRegister) => {
           return { ...item, key: item._id }

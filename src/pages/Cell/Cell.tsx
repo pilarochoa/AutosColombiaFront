@@ -30,7 +30,6 @@ export const Cell = () => {
     try {
       const zones: IZone[] | undefined = await ZoneService.getAllZones(setIsLogin);
       const cellStatuses: ICellStatus[] | undefined = await CellStatusService.getAllCellStatuses(setIsLogin);
-      console.log('zones == ', zones);
       setDataSelects({
         ...dataSelects,
         dataZone: zones || [],
@@ -46,7 +45,6 @@ export const Cell = () => {
   const getCellById = async (id: string) => {
     try {
       const user: ICell | undefined = await CellService.getCellById(id, setIsLogin);
-      console.log('user == ', user);
       if (user) {
         setDataCell(user);
       }

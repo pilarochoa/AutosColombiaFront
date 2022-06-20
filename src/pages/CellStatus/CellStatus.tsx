@@ -17,7 +17,6 @@ export const CellStatus = () => {
   const getCellStatusById = async (id: string) => {
     try {
       const user: ICellStatus | undefined = await CellStatusService.getCellStatusById(id, setIsLogin);
-      console.log('user == ', user);
       if (user) {
         setDataCellStatus(user);
       }

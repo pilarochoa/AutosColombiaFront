@@ -34,7 +34,6 @@ export const Menus = ({
   ];
 
   const onDelete = (id: string) => {
-    console.log('id == ', id)
     handleDelete(id);
   };
 

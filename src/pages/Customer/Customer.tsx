@@ -17,7 +17,6 @@ export const Customer = () => {
   const getCustomerById = async (id: string) => {
     try {
       const customer: ICustomer | undefined = await CustomerService.getCustomerById(id, setIsLogin);
-      console.log('customer == ', customer);
       if (customer) {
         setDataCustomer(customer);
       }
@@ -47,7 +46,6 @@ export const Customer = () => {
       const customer: ICustomer | undefined = await
         (id ? CustomerService.updateCustomer(id, data, setIsLogin) :
         CustomerService.saveCustomer(data, setIsLogin));
-      debugger;  
       if (customer) {
         message.success(text, 2);
         navigate("/customer", { replace: true });
